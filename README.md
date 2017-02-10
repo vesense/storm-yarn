@@ -66,7 +66,7 @@ You need to install a version of [storm](http://storm.apache.org/downloads.html)
 You also need to place a corresponding storm.zip file in HDFS so it can be
 shipped to all of the nodes through the distributed cache at
 
- `/lib/storm/&lt;storm-version&gt;/storm.zip`
+ `/lib/storm/<storm-version>/storm.zip`
 
 You can change the path by using `-stormZip` option.
 

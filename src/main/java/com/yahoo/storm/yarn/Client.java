@@ -19,8 +19,6 @@ package com.yahoo.storm.yarn;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.GnuParser;
@@ -47,7 +45,6 @@ public class Client {
         /**
          * Do the processing
          * @param cl the arguments to process
-         * @param stormConf the storm configuration to use
          * @throws Exception on any error
          */
         public void process(CommandLine cl) throws Exception;

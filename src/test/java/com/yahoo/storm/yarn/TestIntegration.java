@@ -35,11 +35,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backtype.storm.generated.ClusterSummary;
-import backtype.storm.generated.Nimbus;
-import backtype.storm.generated.TopologySummary;
-import backtype.storm.utils.NimbusClient;
-import backtype.storm.utils.Utils;
+import org.apache.storm.generated.ClusterSummary;
+import org.apache.storm.generated.Nimbus;
+import org.apache.storm.generated.TopologySummary;
+import org.apache.storm.utils.NimbusClient;
+import org.apache.storm.utils.Utils;
 
 import com.google.common.base.Joiner;
 
@@ -80,7 +80,7 @@ public class TestIntegration {
 
             //create a storm configuration file with zkport 
             final Map storm_conf = Config.readStormConfig();
-            storm_conf.put(backtype.storm.Config.STORM_ZOOKEEPER_PORT, zkServer.port());
+            storm_conf.put(org.apache.storm.Config.STORM_ZOOKEEPER_PORT, zkServer.port());
             storm_conf_file = testConf.createConfigFile(storm_conf);
 
             List<String> cmd = java.util.Arrays.asList("bin/storm-yarn",
@@ -230,11 +230,11 @@ public class TestIntegration {
         env.put(Environment.PATH.name(), "bin:"+storm_home+File.separator+"bin:"+env.get(Environment.PATH.name()));
         String yarn_conf_dir = yarn_site_xml.getParent().toString();
         env.put("STORM_YARN_CONF_DIR", yarn_conf_dir);        
-        List<URL> logback_xmls = Utils.findResources("logback.xml");
-        if (logback_xmls != null && logback_xmls.size()>=1) {
-            String logback_xml = logback_xmls.get(0).getFile();
-            LOG.debug("logback_xml:"+yarn_conf_dir+File.separator+"logback.xml");
-            FileUtils.copyFile(new File(logback_xml), new File(yarn_conf_dir+File.separator+"logback.xml"));
+        List<URL> log4j2_xmls = Utils.findResources("log4j2.xml");
+        if (log4j2_xmls != null && log4j2_xmls.size()>=1) {
+            String log4j2_xml = log4j2_xmls.get(0).getFile();
+            LOG.debug("log4j2_xml:"+yarn_conf_dir+File.separator+"log4j2.xml");
+            FileUtils.copyFile(new File(log4j2_xml), new File(yarn_conf_dir+File.separator+"log4j2.xml"));
         }
         List<URL> log4j_properties = Utils.findResources("log4j.properties");
         if (log4j_properties != null && log4j_properties.size()>=1) {

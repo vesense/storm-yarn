@@ -61,7 +61,7 @@ public class TestStormCluster {
 
         //simple configuration
         final Map storm_conf = Config.readStormConfig("src/main/resources/master_defaults.yaml");
-        storm_conf.put(backtype.storm.Config.STORM_ZOOKEEPER_PORT, zkServer.port());
+        storm_conf.put(org.apache.storm.Config.STORM_ZOOKEEPER_PORT, zkServer.port());
         storm_conf_file = testConf.createConfigFile(storm_conf);
         
         confirmNothingIsRunning(storm_conf);
@@ -122,7 +122,7 @@ public class TestStormCluster {
         // Try to open a TCP connection to the nimbus port.
         new Socket((String) storm_conf.get(Config.MASTER_HOST),
                 (Integer) storm_conf
-                        .get(backtype.storm.Config.NIMBUS_THRIFT_PORT))
+                        .get(org.apache.storm.Config.NIMBUS_THRIFT_PORT))
                 .close();
     }
 
@@ -132,7 +132,7 @@ public class TestStormCluster {
         // Try to open a TCP connection to the zookeeper ports
         new Socket("localhost", 
                 (Integer) storm_conf
-                    .get(backtype.storm.Config.STORM_ZOOKEEPER_PORT))
+                    .get(org.apache.storm.Config.STORM_ZOOKEEPER_PORT))
                 .close();
     }
 
@@ -141,7 +141,7 @@ public class TestStormCluster {
         // Try to open a TCP connection to the UI port.
         new Socket((String) storm_conf.get(Config.MASTER_HOST),
                 (Integer) storm_conf
-                        .get(backtype.storm.Config.UI_PORT))
+                        .get(org.apache.storm.Config.UI_PORT))
                 .close();
         
     }

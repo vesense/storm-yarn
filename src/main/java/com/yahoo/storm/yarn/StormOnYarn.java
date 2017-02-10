@@ -56,7 +56,7 @@ import org.apache.hadoop.yarn.util.Records;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backtype.storm.utils.Utils;
+import org.apache.storm.utils.Utils;
 
 import com.yahoo.storm.yarn.generated.StormMaster;
 

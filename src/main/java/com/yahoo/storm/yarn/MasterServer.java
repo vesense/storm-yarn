@@ -40,11 +40,12 @@ import org.apache.hadoop.yarn.api.records.ContainerStatus;
 import org.apache.hadoop.yarn.api.records.FinalApplicationStatus;
 import org.apache.hadoop.yarn.conf.YarnConfiguration;
 import org.apache.hadoop.yarn.util.ConverterUtils;
+import org.apache.storm.security.auth.ThriftConnectionType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backtype.storm.security.auth.ThriftServer;
-import backtype.storm.utils.Utils;
+import org.apache.storm.security.auth.ThriftServer;
+import org.apache.storm.utils.Utils;
 
 import com.yahoo.storm.yarn.generated.StormMaster;
 import com.yahoo.storm.yarn.generated.StormMaster.Processor;
@@ -229,8 +230,8 @@ public class MasterServer extends ThriftServer {
     private MasterServer(@SuppressWarnings("rawtypes") Map storm_conf,
             StormMasterServerHandler handler) {
         super(storm_conf, 
-                new Processor<StormMaster.Iface>(handler), 
-                Utils.getInt(storm_conf.get(Config.MASTER_THRIFT_PORT)));
+                new Processor<StormMaster.Iface>(handler),
+                ThriftConnectionType.DRPC);
         try {
             _handler = handler;
             _handler.init(this);

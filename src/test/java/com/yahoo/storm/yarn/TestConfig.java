@@ -30,7 +30,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.yaml.snakeyaml.Yaml;
+import org.apache.storm.shade.org.yaml.snakeyaml.Yaml;
 
 public class TestConfig {
     private static final Log LOG = LogFactory.getLog(TestConfig.class);

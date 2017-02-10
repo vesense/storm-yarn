@@ -21,12 +21,12 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
-import org.apache.thrift7.TException;
-import org.apache.thrift7.transport.TTransportException;
-import org.json.simple.JSONValue;
+import org.apache.storm.thrift.TException;
+import org.apache.storm.thrift.transport.TTransportException;
+import org.apache.storm.shade.org.json.simple.JSONValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.yaml.snakeyaml.Yaml;
+import org.apache.storm.shade.org.yaml.snakeyaml.Yaml;
 
 import com.yahoo.storm.yarn.Client.ClientCommand;
 import com.yahoo.storm.yarn.generated.StormMaster;

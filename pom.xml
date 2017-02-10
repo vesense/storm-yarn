@@ -20,7 +20,7 @@
     <groupId>com.yahoo.storm.yarn</groupId>
     <artifactId>storm-yarn</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-alpha</version>
+    <version>1.0</version>
     <name>storm-yarn</name>
     <url>http://maven.apache.org</url>
     <repositories>
@@ -62,7 +62,7 @@
         </repository>    
     </repositories>
     <properties>
-        <storm.version>0.9.6</storm.version>
+        <storm.version>1.0.2</storm.version>
         <hadoop.version>2.6.0</hadoop.version>
     </properties>
     <dependencies>
@@ -152,8 +152,8 @@
                 <version>3.0</version>
                 <configuration>
                     <fork>true</fork>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
             <plugin>

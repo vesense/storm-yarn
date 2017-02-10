@@ -16,8 +16,7 @@
 
 storm-yarn
 =================
-Storm-yarn enables Storm clusters to be deployed into machines managed by Hadoop YARN.  It is still a work
-in progress.
+Storm-yarn enables Storm clusters to be deployed into machines managed by Hadoop YARN.  It is still a work in progress.
 
 
 ## Contributors
@@ -44,7 +43,8 @@ To run the tests,  you execute the following command.
     mvn package
 
 You will see that storm-yarn commands being executed.
-<pre><code>17:57:27.810 [main] INFO  com.yahoo.storm.yarn.TestIntegration - bin/storm-yarn launch ./conf/storm.yaml --stormZip lib/storm.zip --appname storm-on-yarn-test --output target/appId.txt
+```
+17:57:27.810 [main] INFO  com.yahoo.storm.yarn.TestIntegration - bin/storm-yarn launch ./conf/storm.yaml --stormZip lib/storm.zip --appname storm-on-yarn-test --output target/appId.txt
 17:57:59.681 [main] INFO  com.yahoo.storm.yarn.TestIntegration - bin/storm-yarn getStormConfig ./conf/storm.yaml --appId application_1372121842369_0001 --output ./lib/storm/storm.yaml
 17:58:04.382 [main] INFO  com.yahoo.storm.yarn.TestIntegration - ./lib/storm/bin/storm jar lib/storm-starter-0.0.1-SNAPSHOT.jar storm.starter.ExclamationTopology exclamation-topology
 17:58:04.382 [main] INFO  com.yahoo.storm.yarn.TestIntegration - ./lib/storm/bin/storm kill exclamation-topology
@@ -53,22 +53,24 @@ You will see that storm-yarn commands being executed.
 17:58:12.460 [main] INFO  com.yahoo.storm.yarn.TestIntegration - bin/storm-yarn stopUI ./conf/storm.yaml --appId application_1372121842369_0001
 17:58:15.045 [main] INFO  com.yahoo.storm.yarn.TestIntegration - bin/storm-yarn startUI ./conf/storm.yaml --appId application_1372121842369_0001
 17:58:17.390 [main] INFO  com.yahoo.storm.yarn.TestIntegration - bin/storm-yarn shutdown ./conf/storm.yaml --appId application_1372121842369_0001
-</code></pre>
+```
 
 If you want to skip the tests you can run
 
     mvn package -DskipTests
 
-## Deploy:
+## Deploy
 
-You need to install a version of storm on the hadoop gateway.
+You need to install a version of [storm](http://storm.apache.org/downloads.html) on the hadoop gateway.
 
 You also need to place a corresponding storm.zip file in HDFS so it can be
 shipped to all of the nodes through the distributed cache at
 
-/lib/storm/&lt;storm-version&gt;/storm.zip
+ `/lib/storm/&lt;storm-version&gt;/storm.zip`
 
-Storm-YARN is now configured to use Netty for communication between spouts and bolts.
+You can change the path by using `-stormZip` option.
+
+Storm-YARN is default configured to use Netty for communication between spouts and bolts.
 It's pure JVM based, and thus OS independent.
 
 If you are running storm using zeromq (instead of Netty), you need to augment the standard
@@ -80,7 +82,7 @@ named create-tarball.sh script
 Ideally the storm.zip file is a world readable file installed by ops so there is
 only one copy in the distributed cache ever.
 
-## Run:
+## Run
 
 The yarn-storm command provides a way to launch a storm cluster.  In the future
 it is intended to also provide ways to manage the cluster.
@@ -112,7 +114,46 @@ For a full list of storm-yarn commands and options you can run
 
     storm-yarn help
 
-## Known Issues:
+## Commands
+
+```
+usage: launch
+ storm-yarn launch <master.yaml>
+ -appname <arg>           Application Name. Default value - Storm-on-Yarn
+ -output <arg>            Output file
+ -queue <arg>             RM Queue in which this application is to be submitted
+ -stormConfOutput <arg>   storm.yaml file
+ -stormHome <arg>         Storm Home Directory
+ -stormZip <arg>          file path of storm.zip
+usage: shutdown
+ -appId <arg>   (Required) The storm clusters app ID
+usage: startNimbus
+ -appId <arg>   (Required) The storm clusters app ID
+usage: stopNimbus
+ -appId <arg>   (Required) The storm clusters app ID
+usage: startUI
+ -appId <arg>   (Required) The storm clusters app ID
+usage: stopUI
+ -appId <arg>   (Required) The storm clusters app ID
+usage: addSupervisors
+ -appId <arg>         (Required) The storm clusters app ID
+ -supervisors <arg>   (Required) The number of supervisors to be added
+usage: startSupervisors
+ -appId <arg>   (Required) The storm clusters app ID
+usage: stopSupervisors
+ -appId <arg>   (Required) The storm clusters app ID
+usage: getStormConfig
+ -appId <arg>    (Required) The storm clusters app ID
+ -output <arg>   Output file
+usage: setStormConfig
+ -appId <arg>   (Required) The storm clusters app ID
+usage: version
+ storm-yarn version
+usage: help
+ storm-yarn help
+```
+
+## Known Issues
 
 There is no failover when nimbus goes down. Still working on it.
 

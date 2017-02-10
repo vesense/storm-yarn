@@ -52,7 +52,7 @@ import org.apache.hadoop.yarn.client.api.impl.NMClientImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backtype.storm.utils.Utils;
+import org.apache.storm.utils.Utils;
 
 class StormAMRMClient extends AMRMClientImpl<ContainerRequest>  {
   private static final Logger LOG = LoggerFactory.getLogger(StormAMRMClient.class);

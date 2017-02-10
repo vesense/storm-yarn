@@ -48,7 +48,7 @@ public class TestStormMaster {
 
         //simple configuration
         final Map storm_conf = Config.readStormConfig("src/main/resources/master_defaults.yaml");
-        storm_conf.put(backtype.storm.Config.STORM_ZOOKEEPER_PORT, zkServer.port());
+        storm_conf.put(org.apache.storm.Config.STORM_ZOOKEEPER_PORT, zkServer.port());
         
         String storm_home = testConf.stormHomePath();
         if (storm_home == null) {

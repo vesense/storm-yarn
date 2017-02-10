@@ -22,12 +22,12 @@ import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.thrift7.TException;
-import org.json.simple.JSONValue;
+import org.apache.storm.thrift.TException;
+import org.apache.storm.shade.org.json.simple.JSONValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backtype.storm.Config;
+import org.apache.storm.Config;
 
 import com.google.common.base.Joiner;
 import com.yahoo.storm.yarn.generated.StormMaster;

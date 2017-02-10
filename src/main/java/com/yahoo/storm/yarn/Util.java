@@ -55,7 +55,7 @@ import org.apache.hadoop.yarn.api.records.LocalResourceVisibility;
 import org.apache.hadoop.yarn.conf.YarnConfiguration;
 import org.apache.hadoop.yarn.util.ConverterUtils;
 import org.apache.hadoop.yarn.util.Records;
-import org.yaml.snakeyaml.Yaml;
+import org.apache.storm.shade.org.yaml.snakeyaml.Yaml;
 
 import com.google.common.base.Joiner;
 
@@ -166,10 +166,10 @@ class Util {
     writer.close();
     out.close();
 
-    //logback.xml
-    Path logback_xml = new Path(dirDst, "logback.xml");
-    out = fs.create(logback_xml);
-    CreateLogbackXML(out);
+    //log4j2.xml
+    Path log4j2_xml = new Path(dirDst, "log4j2.xml");
+    out = fs.create(log4j2_xml);
+    createLog4j2Xml(out);
     out.close();
 
     return dirDst;
@@ -181,29 +181,29 @@ class Util {
         LocalResourceVisibility.APPLICATION);
   }
 
-  private static void CreateLogbackXML(OutputStream out) throws IOException {
-    Enumeration<URL> logback_xml_urls;
-    logback_xml_urls = Thread.currentThread().getContextClassLoader().getResources("logback.xml");
-    while (logback_xml_urls.hasMoreElements()) {
-      URL logback_xml_url = logback_xml_urls.nextElement();
-      if (logback_xml_url.getProtocol().equals("file")) {
-        //Case 1: logback.xml as simple file
-        FileInputStream is = new FileInputStream(logback_xml_url.getPath());
+  private static void createLog4j2Xml(OutputStream out) throws IOException {
+    Enumeration<URL> log4j2_xml_urls;
+    log4j2_xml_urls = Thread.currentThread().getContextClassLoader().getResources("log4j2.xml");
+    while (log4j2_xml_urls.hasMoreElements()) {
+      URL log4j2_xml_url = log4j2_xml_urls.nextElement();
+      if (log4j2_xml_url.getProtocol().equals("file")) {
+        //Case 1: log4j2.xml as simple file
+        FileInputStream is = new FileInputStream(log4j2_xml_url.getPath());
         while (is.available() > 0) {
           out.write(is.read());
         }
         is.close();
         return;
       }
-      if (logback_xml_url.getProtocol().equals("jar")) {
-        //Case 2: logback.xml included in a JAR
-        String path = logback_xml_url.getPath();
+      if (log4j2_xml_url.getProtocol().equals("jar")) {
+        //Case 2: log4j2.xml included in a JAR
+        String path = log4j2_xml_url.getPath();
         String jarFile = path.substring("file:".length(), path.indexOf("!"));
         java.util.jar.JarFile jar = new java.util.jar.JarFile(jarFile);
         Enumeration<JarEntry> enums = jar.entries();
         while (enums.hasMoreElements()) {
           java.util.jar.JarEntry file = enums.nextElement();
-          if (!file.isDirectory() && file.getName().equals("logback.xml")) {
+          if (!file.isDirectory() && file.getName().equals("log4j2.xml")) {
             InputStream is = jar.getInputStream(file); // get the input stream
             while (is.available() > 0) {
               out.write(is.read());
@@ -217,7 +217,7 @@ class Util {
       }
     }
 
-    throw new IOException("Failed to locate a logback.xml");
+    throw new IOException("Failed to locate a log4j2.xml");
   }
 
   @SuppressWarnings("rawtypes")
@@ -231,7 +231,7 @@ class Util {
         toRet.add("java");
       toRet.add("-server");
       toRet.add("-Dstorm.home=" + stormHomePath);
-      toRet.add("-Djava.library.path=" + conf.get(backtype.storm.Config.JAVA_LIBRARY_PATH));
+      toRet.add("-Djava.library.path=" + conf.get(org.apache.storm.Config.JAVA_LIBRARY_PATH));
       toRet.add("-Dstorm.conf.file=" + new File(STORM_CONF_PATH_STRING).getName());
       toRet.add("-cp");
       toRet.add(buildClassPathArgument());
@@ -247,11 +247,11 @@ class Util {
   @SuppressWarnings("rawtypes")
   static List<String> buildUICommands(Map conf) throws IOException {
       List<String> toRet =
-              buildCommandPrefix(conf, backtype.storm.Config.UI_CHILDOPTS);
+              buildCommandPrefix(conf, org.apache.storm.Config.UI_CHILDOPTS);
 
-      toRet.add("-Dstorm.options=" + backtype.storm.Config.NIMBUS_HOST + "=localhost");
+      toRet.add("-Dstorm.options=" + org.apache.storm.Config.NIMBUS_HOST + "=localhost");
       toRet.add("-Dlogfile.name=" + System.getenv("STORM_LOG_DIR") + "/ui.log");
-      toRet.add("backtype.storm.ui.core");
+      toRet.add("org.apache.storm.ui.core");
 
       return toRet;
   }
@@ -259,10 +259,10 @@ class Util {
   @SuppressWarnings("rawtypes")
   static List<String> buildNimbusCommands(Map conf) throws IOException {
       List<String> toRet =
-              buildCommandPrefix(conf, backtype.storm.Config.NIMBUS_CHILDOPTS);
+              buildCommandPrefix(conf, org.apache.storm.Config.NIMBUS_CHILDOPTS);
 
       toRet.add("-Dlogfile.name=" + System.getenv("STORM_LOG_DIR") + "/nimbus.log");
-      toRet.add("backtype.storm.daemon.nimbus");
+      toRet.add("org.apache.storm.daemon.nimbus");
 
       return toRet;
   }
@@ -270,11 +270,11 @@ class Util {
   @SuppressWarnings("rawtypes")
   static List<String> buildSupervisorCommands(Map conf) throws IOException {
       List<String> toRet =
-              buildCommandPrefix(conf, backtype.storm.Config.NIMBUS_CHILDOPTS);
+              buildCommandPrefix(conf, org.apache.storm.Config.NIMBUS_CHILDOPTS);
 
       toRet.add("-Dstorm.log.dir="+ ApplicationConstants.LOG_DIR_EXPANSION_VAR);
       toRet.add("-Dlogfile.name=" + ApplicationConstants.LOG_DIR_EXPANSION_VAR + "/supervisor.log");
-      toRet.add("backtype.storm.daemon.supervisor");
+      toRet.add("org.apache.storm.daemon.supervisor");
 
       return toRet;
   }

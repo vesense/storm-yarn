@@ -20,9 +20,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Map;
 
-import org.yaml.snakeyaml.Yaml;
+import org.apache.storm.shade.org.yaml.snakeyaml.Yaml;
 
-import backtype.storm.utils.Utils;
+import org.apache.storm.utils.Utils;
 
 public class Config {
     final public static String MASTER_DEFAULTS_CONFIG = "master_defaults.yaml";
